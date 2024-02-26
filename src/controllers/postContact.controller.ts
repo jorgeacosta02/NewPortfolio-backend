@@ -7,7 +7,12 @@ const { NODEMAILER_USER, NODEMAILER_PASS, DESTINATION_EMAIL } = process.env;
 
 const postContactController = async (req: Request, res: Response) => {
   try {
-    const {name,email,subject,message} = req.body;
+    const {
+      name,
+      email,
+      subject,
+      message
+    } = req.body;
     // inicia la funcion de recibir el mensaje
     let transporter = nodemailer.createTransport({
       //options -- define los datos de conexión
@@ -52,8 +57,8 @@ const postContactController = async (req: Request, res: Response) => {
        return res.status(200).send("it was sent satisfactorily")
       }
     });
-  } catch (error) {
-    console.log("Error in catch block:", error);
+  } catch (error:any) {
+    console.log("Error in catch block:", error.message);
     if (error instanceof Error) {
       console.log(error.message);
      return res.status(500).send(error.message)
