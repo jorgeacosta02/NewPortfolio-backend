@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 import nodemailer from 'nodemailer';
 import dotenv from "dotenv";
 dotenv.config();
-const { EXPLOSERVICE_NODEMAILER_USER, EXPLOSERVICE_NODEMAILER_PASS, DESTINATION_EMAIL } = process.env;
+
+const { NODEMAILER_USER, NODEMAILER_PASS, DESTINATION_EMAIL } = process.env;
 
 const postContactController = async (req: Request, res: Response) => {
   try {
@@ -17,8 +18,8 @@ const postContactController = async (req: Request, res: Response) => {
       // port: 465,
       // secure: true,
       auth: {
-        user: EXPLOSERVICE_NODEMAILER_USER,
-        pass: EXPLOSERVICE_NODEMAILER_PASS,
+        user: NODEMAILER_USER,
+        pass: NODEMAILER_PASS,
       },
       tls: {
         rejectUnauthorized: false, // Desactiva la verificación del certificado
@@ -26,21 +27,21 @@ const postContactController = async (req: Request, res: Response) => {
     });
     // se fusionará en cada objeto de mensaje.
     let mailOptions = {
-      from: EXPLOSERVICE_NODEMAILER_USER,
+      from: NODEMAILER_USER,
       to: DESTINATION_EMAIL,
       subject,
       html: `<html>
-	<head>
-        <body>
-        <h3 style="color:#9E7842">Datos del usuario:<h3>
-        <p><b>Nombre:</b> ${name}.</p>
-        <p><b>Correo electrónico:</b> ${email}</p>
-        </br>
-        <h3 style="color:#9E7842">Mensaje:</h3>
-        <p>${message}.<p>
-		</body>
-	</head>
-</html>`,
+        <head>
+              <body>
+              <h3 style="color:#9E7842">Datos del usuario:<h3>
+              <p><b>Nombre:</b> ${name}.</p>
+              <p><b>Correo electrónico:</b> ${email}</p>
+              </br>
+              <h3 style="color:#9E7842">Mensaje:</h3>
+              <p>${message}.<p>
+          </body>
+        </head>
+      </html>`,
     };
 
     transporter.sendMail(mailOptions, (error: Error | null, info: nodemailer.SentMessageInfo) => {
