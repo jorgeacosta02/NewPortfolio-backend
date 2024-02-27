@@ -3,7 +3,11 @@ import nodemailer from 'nodemailer';
 import dotenv from "dotenv";
 dotenv.config();
 
-const { NODEMAILER_USER, NODEMAILER_PASS, DESTINATION_EMAIL } = process.env;
+const {
+  NODEMAILER_USER,
+  NODEMAILER_PASS,
+  DESTINATION_EMAIL
+} = process.env;
 
 const postContactController = async (req: Request, res: Response) => {
   try {
