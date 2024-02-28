@@ -16,9 +16,12 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const { NODEMAILER_USER, NODEMAILER_PASS, DESTINATION_EMAIL } = process.env;
+console.log('antes de postContactController');
 const postContactController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('recién entrado');
     try {
         const { name, email, subject, message } = req.body;
+        console.log('por declarar let transporter');
         // inicia la funcion de recibir el mensaje
         let transporter = nodemailer_1.default.createTransport({
             //options -- define los datos de conexión
@@ -36,6 +39,7 @@ const postContactController = (req, res) => __awaiter(void 0, void 0, void 0, fu
                 rejectUnauthorized: false, // Desactiva la verificación del certificado
             },
         });
+        console.log('después de let transporter');
         // se fusionará en cada objeto de mensaje.
         let mailOptions = {
             from: NODEMAILER_USER,
@@ -54,6 +58,7 @@ const postContactController = (req, res) => __awaiter(void 0, void 0, void 0, fu
         </head>
       </html>`,
         };
+        console.log('antes de sendMail');
         transporter.sendMail(mailOptions, (error, info) => {
             console.log("Error in sendMail callback:", error);
             if (error) {

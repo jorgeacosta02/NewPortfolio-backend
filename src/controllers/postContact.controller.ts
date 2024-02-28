@@ -9,7 +9,10 @@ const {
   DESTINATION_EMAIL
 } = process.env;
 
+console.log('antes de postContactController')
+
 const postContactController = async (req: Request, res: Response) => {
+  console.log('recién entrado')
   try {
     const {
       name,
@@ -17,6 +20,8 @@ const postContactController = async (req: Request, res: Response) => {
       subject,
       message
     } = req.body;
+
+    console.log('por declarar let transporter')
     // inicia la funcion de recibir el mensaje
     let transporter = nodemailer.createTransport({
       //options -- define los datos de conexión
@@ -34,6 +39,8 @@ const postContactController = async (req: Request, res: Response) => {
         rejectUnauthorized: false, // Desactiva la verificación del certificado
       },
     });
+
+    console.log('después de let transporter')
     // se fusionará en cada objeto de mensaje.
     let mailOptions = {
       from: NODEMAILER_USER,
@@ -52,6 +59,8 @@ const postContactController = async (req: Request, res: Response) => {
         </head>
       </html>`,
     };
+
+    console.log('antes de sendMail')
 
     transporter.sendMail(mailOptions, (error: Error | null, info: nodemailer.SentMessageInfo) => {
       console.log("Error in sendMail callback:", error);
